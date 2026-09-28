@@ -112,6 +112,19 @@
       margin-top: 2rem;
     }
 
+    @media (max-width: 868px) {
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+      .hero-portal h1 {
+        font-size: 2.2rem;
+      }
+      .action-row {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+
     .stat-card {
       background: var(--bg-card);
       border: 1px solid rgba(255, 42, 75, 0.2);
@@ -170,6 +183,7 @@
       font-weight: 700;
       box-shadow: 0 0 25px rgba(255, 42, 75, 0.5);
       transition: all 0.3s ease;
+      text-align: center;
     }
 
     .portal-btn:hover {
@@ -183,7 +197,7 @@
   <div class="container">
     <header>
       <div class="logo">NOVARA // PORTAL</div>
-      <a href="novara_showcase.html" class="back-btn">
+      <a href="index.html" class="back-btn">
         ← Back to Main Experience
       </a>
     </header>
@@ -212,10 +226,10 @@
     </div>
 
     <div class="action-row">
-      <a href="https://github.com" target="_blank" class="portal-btn">
-        View Open Source Core (GitHub) ↗
+      <a href="https://github.com/akhileshtribhavannishad1-sketch/project-1" target="_blank" class="portal-btn">
+        View Repository (GitHub) ↗
       </a>
-      <a href="novara_showcase.html#book" class="portal-btn" style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2);">
+      <a href="index.html?book=true" class="portal-btn" style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2);">
         Schedule Private Demo
       </a>
     </div>

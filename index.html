@@ -30,7 +30,16 @@
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      cursor: none !important;
+      cursor: none;
+    }
+
+    @media (hover: none) and (pointer: coarse) {
+      * {
+        cursor: auto !important;
+      }
+      .cursor-dot, .cursor-ring {
+        display: none !important;
+      }
     }
 
     html {
@@ -1156,7 +1165,7 @@
         <a href="novara_portal.html" class="btn-cta interactive-el">
           Open Novara Cloud Console ↗
         </a>
-        <a href="https://github.com" target="_blank" class="btn-secondary interactive-el">
+        <a href="https://github.com/akhileshtribhavannishad1-sketch/project-1" target="_blank" class="btn-secondary interactive-el">
           GitHub Repository ↗
         </a>
       </div>
@@ -1895,6 +1904,14 @@
         status.innerText = 'Camera: Standby';
       }
     }
+
+    // Auto-open modal if navigated with #book or ?book=true
+    window.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('book') === 'true' || window.location.hash === '#book') {
+        setTimeout(openBookingModal, 200);
+      }
+    });
   </script>
 </body>
 </html>
