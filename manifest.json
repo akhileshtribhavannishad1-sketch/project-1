@@ -1,0 +1,9 @@
+{
+  "name": "Novara — 4K Cinematic Digital Interface",
+  "short_name": "Novara",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#040406",
+  "theme_color": "#ff2a4b",
+  "description": "Enterprise Cloud Telemetry, Biometric Holographic Face Mask, and Gesture Interface."
+}
