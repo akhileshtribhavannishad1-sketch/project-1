@@ -1361,6 +1361,10 @@
           if (faceMeshTracker) await faceMeshTracker.send({ image: videoElem });
           if (handsTracker) await handsTracker.send({ image: videoElem });
         }
+        // Continuous face mask rendering to prevent any flicker
+        if (latestFaceLandmarks) {
+          renderCyberFaceMask(latestFaceLandmarks);
+        }
         requestAnimationFrame(aiProcessLoop);
       };
       aiProcessLoop();
@@ -1377,7 +1381,7 @@
     function onHandsResult(results) {
       bioCtx.clearRect(0, 0, bioCanvas.width, bioCanvas.height);
 
-      // Render Holographic Cyber Face Mask
+      // Render Full Holographic Cyber Face Mask
       if (latestFaceLandmarks) {
         renderCyberFaceMask(latestFaceLandmarks);
       }
@@ -1535,7 +1539,7 @@
     // Comprehensive Virtual Click Executor for all Elements & Brand Links
     function triggerVirtualClick(x, y) {
       const now = Date.now();
-      if (now - lastClickTime < 500) return; // Debounce 500ms
+      if (now - lastClickTime < 450) return; // Responsive 450ms debounce
       lastClickTime = now;
 
       createClickRipple(x, y);
@@ -1547,7 +1551,20 @@
           const text = (clickable.innerText || clickable.value || 'Element').trim().split('\n')[0].substring(0, 20);
           showModeToast(`CLICKED: ${text}`, '🎯');
 
-          // Check if it's an internal anchor link
+          // High-Visibility Gesture Click Animation Feedback
+          clickable.style.transition = 'all 0.15s cubic-bezier(0.1, 0.9, 0.2, 1)';
+          clickable.style.transform = 'scale(1.15)';
+          clickable.style.borderColor = '#00ff88';
+          clickable.style.boxShadow = '0 0 35px #00ff88, inset 0 0 15px rgba(0, 255, 136, 0.4)';
+          clickable.style.color = '#ffffff';
+          setTimeout(() => {
+            clickable.style.transform = '';
+            clickable.style.borderColor = '';
+            clickable.style.boxShadow = '';
+            clickable.style.color = '';
+          }, 450);
+
+          // Check if it's an internal anchor link (#services, #why-us, etc.)
           const hrefAttr = clickable.getAttribute('href');
           if (hrefAttr && hrefAttr.startsWith('#')) {
             if (hrefAttr === '#' || hrefAttr === '') {
@@ -1559,9 +1576,10 @@
             return;
           }
 
-          // Check if it's a Brand Logo or External / Portal Link
+          // Check if it's a Brand Logo or External / Portal Link (Stripe, Slack, Airbnb, etc.)
           if (clickable.tagName === 'A' && clickable.href) {
-            safeOpenUrl(clickable.href);
+            const destUrl = clickable.href;
+            safeOpenUrl(destUrl);
             return;
           }
 
@@ -1578,19 +1596,12 @@
       }
     }
 
-    // Direct Safe URL Opener with Popup Blocker Bypass
+    // Direct Safe URL Opener with Reliable Navigation
     function safeOpenUrl(url) {
       try {
-        const win = window.open(url, '_blank', 'noopener,noreferrer');
+        const win = window.open(url, '_blank');
         if (!win || win.closed || typeof win.closed === 'undefined') {
-          // If popup is blocked by browser, use dynamic anchor fallback
-          const tempA = document.createElement('a');
-          tempA.href = url;
-          tempA.target = '_blank';
-          tempA.rel = 'noopener noreferrer';
-          document.body.appendChild(tempA);
-          tempA.click();
-          tempA.remove();
+          window.location.href = url;
         }
       } catch (e) {
         window.location.href = url;
@@ -1612,7 +1623,7 @@
     });
 
     // ==========================================
-    // 3. CYBERNETIC HOLOGRAPHIC FACE MASK RENDERER
+    // 3. FULL HOLOGRAPHIC CYBERNETIC FACE MASK RENDERER
     // ==========================================
     function renderCyberFaceMask(landmarks) {
       const w = bioCanvas.width;
@@ -1626,22 +1637,27 @@
       const rightCheek = landmarks[454];
       const leftEye = landmarks[468] || landmarks[159];
       const rightEye = landmarks[473] || landmarks[386];
+      const noseTip = landmarks[1] || landmarks[4];
+      const noseBridge = landmarks[168] || landmarks[6];
 
       const centerX = (leftCheek.x + rightCheek.x) / 2 * w;
       const centerY = (forehead.y + chin.y) / 2 * h;
+      const time = Date.now() * 0.003;
 
-      // 1. Neon Glowing Iron-Man Style Face Contour Armor
-      bioCtx.strokeStyle = '#ff2a4b';
-      bioCtx.fillStyle = 'rgba(255, 42, 75, 0.14)';
-      bioCtx.lineWidth = 2.5;
-      bioCtx.shadowBlur = 16;
-      bioCtx.shadowColor = '#ff0033';
-
+      // -------------------------------------------------------------
+      // LAYER 1: FULL FACIAL CONTOUR & CYBER ARMOR SHIELD
+      // -------------------------------------------------------------
       const faceOutlineIndices = [
         10, 338, 297, 332, 284, 251, 389, 356, 454, 323, 361, 288,
         397, 365, 379, 378, 400, 377, 152, 148, 176, 149, 150, 136,
         172, 58, 132, 93, 234, 127, 162, 21, 54, 103, 67, 109
       ];
+
+      bioCtx.strokeStyle = '#00e5ff';
+      bioCtx.fillStyle = 'rgba(0, 229, 255, 0.08)';
+      bioCtx.lineWidth = 2.2;
+      bioCtx.shadowBlur = 18;
+      bioCtx.shadowColor = '#00e5ff';
 
       bioCtx.beginPath();
       faceOutlineIndices.forEach((idx, i) => {
@@ -1653,14 +1669,32 @@
       bioCtx.stroke();
       bioCtx.fill();
 
-      // 2. Cheekbone Geometric Cyber Armor Lines
-      bioCtx.strokeStyle = 'rgba(255, 120, 150, 0.85)';
-      bioCtx.lineWidth = 1.8;
-      const cheekTriangles = [
-        [10, 1, 234], [10, 1, 454], [1, 152, 234], [1, 152, 454],
-        [168, 197, 2], [108, 69, 104], [337, 299, 333]
+      // -------------------------------------------------------------
+      // LAYER 2: FULL FACIAL MESH TESSELLATION & POLYGONAL LATTICE
+      // -------------------------------------------------------------
+      const cyberTriangles = [
+        // Forehead & Temple Lattice
+        [10, 67, 109], [10, 297, 338], [10, 109, 338], [109, 67, 103], [338, 297, 332],
+        [10, 151, 9], [151, 9, 8], [8, 168, 6],
+        // Eyebrows to Nose Bridge
+        [70, 63, 105], [105, 66, 107], [336, 296, 334], [334, 293, 300],
+        [107, 168, 6], [336, 168, 6], [70, 107, 168], [300, 336, 168],
+        // Eye Sockets & Cheekbone Armor
+        [33, 159, 133], [133, 145, 33], [263, 386, 362], [362, 374, 263],
+        [133, 168, 1], [362, 168, 1], [1, 2, 98], [1, 2, 327],
+        [159, 234, 133], [386, 454, 362], [234, 127, 93], [454, 356, 323],
+        // Cheeks to Jawline & Mouth Grid
+        [234, 1, 152], [454, 1, 152], [1, 152, 98], [1, 152, 327],
+        [61, 0, 17], [291, 0, 17], [61, 17, 146], [291, 17, 375],
+        [146, 152, 17], [375, 152, 17], [93, 132, 58], [323, 361, 288]
       ];
-      cheekTriangles.forEach(tri => {
+
+      bioCtx.strokeStyle = 'rgba(255, 42, 75, 0.75)';
+      bioCtx.lineWidth = 1.2;
+      bioCtx.shadowBlur = 8;
+      bioCtx.shadowColor = '#ff2a4b';
+
+      cyberTriangles.forEach(tri => {
         const p1 = landmarks[tri[0]];
         const p2 = landmarks[tri[1]];
         const p3 = landmarks[tri[2]];
@@ -1674,39 +1708,105 @@
         }
       });
 
-      // 3. Cyber Eye Reticles & Iris Scanners
+      // -------------------------------------------------------------
+      // LAYER 3: GLOWING HOLOGRAPHIC VERTEX NODES
+      // -------------------------------------------------------------
+      const keyNodes = [10, 152, 234, 454, 1, 168, 107, 336, 33, 263, 61, 291, 58, 288, 197];
+      bioCtx.fillStyle = '#00ff88';
+      bioCtx.shadowBlur = 12;
+      bioCtx.shadowColor = '#00ff88';
+
+      keyNodes.forEach(idx => {
+        const pt = landmarks[idx];
+        if (pt) {
+          bioCtx.beginPath();
+          bioCtx.arc(pt.x * w, pt.y * h, 3.2, 0, Math.PI * 2);
+          bioCtx.fill();
+        }
+      });
+
+      // -------------------------------------------------------------
+      // LAYER 4: CYBERNETIC VISOR & IRIS TARGETING LOCK
+      // -------------------------------------------------------------
       if (leftEye && rightEye) {
-        [leftEye, rightEye].forEach(eye => {
+        const lx = leftEye.x * w;
+        const ly = leftEye.y * h;
+        const rx = rightEye.x * w;
+        const ry = rightEye.y * h;
+
+        // Visor Beam Connecting Eyes
+        bioCtx.strokeStyle = 'rgba(0, 229, 255, 0.85)';
+        bioCtx.lineWidth = 2.5;
+        bioCtx.shadowBlur = 16;
+        bioCtx.shadowColor = '#00e5ff';
+        bioCtx.beginPath();
+        bioCtx.moveTo(lx - 25, ly);
+        bioCtx.lineTo(rx + 25, ry);
+        bioCtx.stroke();
+
+        // High-Tech Targeting Reticles on Both Eyes
+        [leftEye, rightEye].forEach((eye, eyeIdx) => {
           const ex = eye.x * w;
           const ey = eye.y * h;
 
+          // Rotating Outer Bracket Reticle
+          bioCtx.save();
+          bioCtx.translate(ex, ey);
+          bioCtx.rotate(time * (eyeIdx === 0 ? 1 : -1));
+          
           bioCtx.strokeStyle = '#00ff88';
           bioCtx.lineWidth = 2;
-          bioCtx.shadowBlur = 15;
+          bioCtx.shadowBlur = 14;
           bioCtx.shadowColor = '#00ff88';
-          bioCtx.strokeRect(ex - 16, ey - 16, 32, 32);
+          bioCtx.strokeRect(-16, -16, 32, 32);
 
-          bioCtx.beginPath();
-          bioCtx.arc(ex, ey, 3.5, 0, Math.PI * 2);
+          // Center Reticle Dot
           bioCtx.fillStyle = '#00ff88';
+          bioCtx.beginPath();
+          bioCtx.arc(0, 0, 3, 0, Math.PI * 2);
           bioCtx.fill();
 
+          // Corner Ticks
           bioCtx.strokeStyle = '#00e5ff';
           bioCtx.beginPath();
-          bioCtx.moveTo(ex - 22, ey - 10); bioCtx.lineTo(ex - 22, ey - 22); bioCtx.lineTo(ex - 10, ey - 22);
-          bioCtx.moveTo(ex + 10, ey - 22); bioCtx.lineTo(ex + 22, ey - 22); bioCtx.lineTo(ex + 22, ey - 10);
-          bioCtx.moveTo(ex - 22, ey + 10); bioCtx.lineTo(ex - 22, ey + 22); bioCtx.lineTo(ex - 10, ey + 22);
-          bioCtx.moveTo(ex + 10, ey + 22); bioCtx.lineTo(ex + 22, ey + 22); bioCtx.lineTo(ex + 22, ey + 10);
+          bioCtx.moveTo(-20, -10); bioCtx.lineTo(-20, -20); bioCtx.lineTo(-10, -20);
+          bioCtx.moveTo(10, -20); bioCtx.lineTo(20, -20); bioCtx.lineTo(20, -10);
+          bioCtx.moveTo(-20, 10); bioCtx.lineTo(-20, 20); bioCtx.lineTo(-10, 20);
+          bioCtx.moveTo(10, 20); bioCtx.lineTo(20, 20); bioCtx.lineTo(20, 10);
           bioCtx.stroke();
+
+          bioCtx.restore();
         });
       }
 
-      // 4. Forehead HUD Biometric Lock Banner
+      // -------------------------------------------------------------
+      // LAYER 5: ANIMATED VERTICAL LASER SCANNER
+      // -------------------------------------------------------------
+      const topY = forehead.y * h;
+      const botY = chin.y * h;
+      const scanY = topY + (Math.sin(time * 2) * 0.5 + 0.5) * (botY - topY);
+
+      bioCtx.strokeStyle = '#00ff88';
+      bioCtx.lineWidth = 2;
+      bioCtx.shadowBlur = 15;
+      bioCtx.shadowColor = '#00ff88';
+      bioCtx.beginPath();
+      bioCtx.moveTo(centerX - 85, scanY);
+      bioCtx.lineTo(centerX + 85, scanY);
+      bioCtx.stroke();
+
+      // -------------------------------------------------------------
+      // LAYER 6: SCI-FI FOREHEAD & CHIN TELEMETRY HUD OVERLAYS
+      // -------------------------------------------------------------
       bioCtx.shadowBlur = 10;
-      bioCtx.shadowColor = '#ff2a4b';
-      bioCtx.font = 'bold 12px "Space Grotesk", monospace';
-      bioCtx.fillStyle = '#ff2a4b';
-      bioCtx.fillText(`[ CYBER MASK: ACTIVE // PILOT LOCK ]`, centerX - 120, (forehead.y * h) - 28);
+      bioCtx.shadowColor = '#00e5ff';
+      bioCtx.font = 'bold 11px "Space Grotesk", monospace';
+      bioCtx.fillStyle = '#00e5ff';
+      bioCtx.fillText(`[ PILOT: ACTIVE // FULL CYBER MASK ]`, centerX - 110, topY - 24);
+
+      bioCtx.fillStyle = '#00ff88';
+      bioCtx.font = 'bold 9px "Space Grotesk", monospace';
+      bioCtx.fillText(`BIOMETRICS: 100% | HEMISPHERE: SYNC | HUD: ONLINE`, centerX - 115, botY + 24);
 
       bioCtx.restore();
     }
