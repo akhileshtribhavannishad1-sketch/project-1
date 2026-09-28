@@ -668,6 +668,204 @@
       border-radius: 18px;
     }
 
+    /* Video HUD Watermark & Lead Architect Overlay */
+    .video-overlay-badge {
+      position: absolute;
+      top: 1.5rem;
+      left: 1.5rem;
+      background: rgba(8, 8, 14, 0.88);
+      backdrop-filter: blur(18px);
+      border: 1px solid rgba(255, 42, 75, 0.6);
+      border-radius: 14px;
+      padding: 0.8rem 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      z-index: 10;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 42, 75, 0.3);
+      text-align: left;
+      pointer-events: auto;
+    }
+
+    .hud-status-dot {
+      width: 10px;
+      height: 10px;
+      background: #00ff88;
+      border-radius: 50%;
+      box-shadow: 0 0 12px #00ff88;
+      animation: pulseGlow 1.8s infinite;
+    }
+
+    .hud-role {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: #ff2a4b;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-family: 'Space Grotesk', monospace;
+    }
+
+    .hud-name {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #ffffff;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .hud-uni {
+      font-size: 0.82rem;
+      color: #a8a8b8;
+    }
+
+    .video-contact-badge {
+      position: absolute;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      background: rgba(8, 8, 14, 0.88);
+      backdrop-filter: blur(18px);
+      border: 1px solid rgba(0, 229, 255, 0.5);
+      border-radius: 14px;
+      padding: 0.7rem 1.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      z-index: 10;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 229, 255, 0.25);
+      text-align: right;
+    }
+
+    .video-contact-link {
+      color: #e0e0f0;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-family: 'Space Grotesk', monospace;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 0.5rem;
+      transition: color 0.2s ease;
+    }
+
+    .video-contact-link:hover {
+      color: #00ff88;
+      text-shadow: 0 0 12px #00ff88;
+    }
+
+    /* Executive Creator Profile Card */
+    .creator-profile-card {
+      max-width: 1050px;
+      margin: 2.5rem auto 0;
+      background: rgba(14, 14, 22, 0.8);
+      backdrop-filter: blur(25px);
+      border: 1px solid rgba(255, 42, 75, 0.35);
+      border-radius: 20px;
+      padding: 2.2rem 2.8rem;
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 35px rgba(255, 42, 75, 0.2);
+      text-align: left;
+      position: relative;
+    }
+
+    @media (max-width: 868px) {
+      .video-overlay-badge {
+        position: static;
+        margin-bottom: 1rem;
+      }
+      .video-contact-badge {
+        position: static;
+        margin-top: 1rem;
+        text-align: left;
+      }
+      .creator-profile-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 2rem 1.5rem;
+      }
+      .creator-contact-row {
+        justify-content: center;
+      }
+    }
+
+    .creator-avatar {
+      width: 90px;
+      height: 90px;
+      min-width: 90px;
+      background: linear-gradient(135deg, #ff2a4b, #660012);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #fff;
+      font-family: 'Space Grotesk', sans-serif;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 0 30px rgba(255, 42, 75, 0.7);
+    }
+
+    .creator-details {
+      flex: 1;
+    }
+
+    .creator-tag {
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      color: #ff2a4b;
+      text-transform: uppercase;
+      font-family: 'Space Grotesk', monospace;
+      margin-bottom: 0.3rem;
+    }
+
+    .creator-name {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #ffffff;
+      font-family: 'Space Grotesk', sans-serif;
+      margin-bottom: 0.4rem;
+    }
+
+    .creator-bio {
+      color: #a8a8ba;
+      font-size: 1.05rem;
+      line-height: 1.6;
+      margin-bottom: 1.4rem;
+    }
+
+    .creator-bio strong {
+      color: #00e5ff;
+    }
+
+    .creator-contact-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .creator-pill-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: #ffffff;
+      text-decoration: none;
+      padding: 0.7rem 1.4rem;
+      border-radius: 25px;
+      font-size: 0.92rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      transition: all 0.25s ease;
+    }
+
+    .creator-pill-btn:hover {
+      background: rgba(255, 42, 75, 0.2);
+      border-color: #ff2a4b;
+      box-shadow: 0 0 20px rgba(255, 42, 75, 0.5);
+      transform: translateY(-2px);
+    }
+
     /* Brands Section */
     .section-brands {
       padding: 6.5rem 0;
@@ -1117,11 +1315,53 @@
       </p>
 
       <div class="video-container interactive-el">
+        <!-- High-Tech Video HUD Overlay Watermark -->
+        <div class="video-overlay-badge">
+          <div class="hud-status-dot"></div>
+          <div>
+            <div class="hud-role">PROJECT CREATOR & LEAD ARCHITECT</div>
+            <div class="hud-name">Akhilesh Nishad</div>
+            <div class="hud-uni">Ajeenkya D.Y. Patil University, Pune</div>
+          </div>
+        </div>
+
+        <div class="video-contact-badge">
+          <a href="tel:8097852320" class="video-contact-link interactive-el">
+            <span>📞</span> +91 8097852320
+          </a>
+          <a href="mailto:akhileshtribhavannishad1@gmail.com" class="video-contact-link interactive-el">
+            <span>✉</span> akhileshtribhavannishad1@gmail.com
+          </a>
+        </div>
+
         <div class="video-inner">
           <video controls autoplay loop muted playsinline id="cinematicVideo">
             <source src="novara_cinematic_showcase.mp4" type="video/mp4">
             Your browser does not support the video tag.
           </video>
+        </div>
+      </div>
+
+      <!-- Executive Creator Profile Card -->
+      <div class="creator-profile-card interactive-el">
+        <div class="creator-avatar">
+          AN
+        </div>
+        <div class="creator-details">
+          <div class="creator-tag">PROJECT LEAD & SYSTEM ARCHITECT</div>
+          <h3 class="creator-name">Akhilesh Nishad</h3>
+          <p class="creator-bio">Student at <strong>Ajeenkya D.Y. Patil University, Pune</strong> • Core Architect & Developer of Novara 4K Cinematic & Biometric Telemetry Interface.</p>
+          <div class="creator-contact-row">
+            <a href="tel:8097852320" class="creator-pill-btn interactive-el">
+              <span>📞</span> <strong>+91 8097852320</strong>
+            </a>
+            <a href="mailto:akhileshtribhavannishad1@gmail.com" class="creator-pill-btn interactive-el">
+              <span>✉</span> <strong>akhileshtribhavannishad1@gmail.com</strong>
+            </a>
+            <a href="https://github.com/akhileshtribhavannishad1-sketch" target="_blank" class="creator-pill-btn interactive-el">
+              <span>🐙</span> <strong>GitHub Profile</strong>
+            </a>
+          </div>
         </div>
       </div>
     </section>
@@ -1162,16 +1402,22 @@
     <!-- Footer / Outro -->
     <footer class="reveal" id="contact">
       <div class="footer-logo interactive-el">NOVARA</div>
-      <p class="footer-tagline">Fintech • SaaS • E-Commerce • Enterprise Digital Systems</p>
-      <div style="display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 2rem;">
+      <p class="footer-tagline">Architected & Developed by Akhilesh Nishad • Ajeenkya D.Y. Patil University, Pune</p>
+      <div style="display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 2rem; flex-wrap: wrap;">
         <a href="novara_portal.html" class="btn-cta interactive-el">
           Open Novara Cloud Console ↗
+        </a>
+        <a href="tel:8097852320" class="btn-secondary interactive-el">
+          📞 +91 8097852320
+        </a>
+        <a href="mailto:akhileshtribhavannishad1@gmail.com" class="btn-secondary interactive-el">
+          ✉ Contact Lead Architect
         </a>
         <a href="https://github.com/akhileshtribhavannishad1-sketch/project-1" target="_blank" class="btn-secondary interactive-el">
           GitHub Repository ↗
         </a>
       </div>
-      <p style="color: #666; font-size: 0.9rem;">© 2026 Novara Technologies Inc. All rights reserved.</p>
+      <p style="color: #888; font-size: 0.9rem;">© 2026 Novara Technologies • Lead Engineer: Akhilesh Nishad (Ajeenkya D.Y. Patil University, Pune).</p>
     </footer>
   </div>
 
