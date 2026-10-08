@@ -55,6 +55,8 @@
       align-items: center;
       padding: 1.5rem 0 3rem;
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      flex-wrap: wrap;
+      gap: 1rem;
     }
 
     .logo {
@@ -65,6 +67,13 @@
       background: linear-gradient(180deg, #fff, #999);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 0.8rem;
+      align-items: center;
+      flex-wrap: wrap;
     }
 
     .back-btn {
@@ -171,7 +180,8 @@
       margin-top: 3.5rem;
       display: flex;
       justify-content: center;
-      gap: 1.5rem;
+      gap: 1.2rem;
+      flex-wrap: wrap;
     }
 
     .portal-btn {
@@ -184,11 +194,115 @@
       box-shadow: 0 0 25px rgba(255, 42, 75, 0.5);
       transition: all 0.3s ease;
       text-align: center;
+      border: none;
+      cursor: pointer;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.95rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
     }
 
     .portal-btn:hover {
       transform: scale(1.05);
       box-shadow: 0 0 40px rgba(255, 42, 75, 0.8);
+    }
+
+    /* Modal Styles */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.88);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      z-index: 100000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      padding: 1.5rem;
+    }
+
+    .modal-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-content {
+      background: #0d0d14;
+      border: 1px solid rgba(255, 42, 75, 0.5);
+      border-radius: 24px;
+      padding: 2.8rem;
+      max-width: 550px;
+      width: 100%;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9), 0 0 50px rgba(255, 42, 75, 0.4);
+      position: relative;
+      transform: scale(0.92);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-backdrop.open .modal-content {
+      transform: scale(1);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1.2rem;
+      right: 1.2rem;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: var(--text-muted);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .modal-close:hover {
+      color: #fff;
+      background: rgba(255, 42, 75, 0.5);
+      border-color: #ff2a4b;
+    }
+
+    .form-group {
+      margin-bottom: 1.3rem;
+      text-align: left;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #e0e0e6;
+      font-size: 0.88rem;
+      font-weight: 600;
+    }
+
+    .form-input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      padding: 0.85rem 1.1rem;
+      border-radius: 12px;
+      color: #fff;
+      font-size: 0.95rem;
+      outline: none;
+      font-family: inherit;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .form-input:focus {
+      border-color: #ff2a4b;
+      box-shadow: 0 0 15px rgba(255, 42, 75, 0.4);
     }
   </style>
 </head>
@@ -197,9 +311,14 @@
   <div class="container">
     <header>
       <div class="logo">NOVARA // PORTAL</div>
-      <a href="index.html" class="back-btn">
-        ← Back to Main Experience
-      </a>
+      <div class="header-actions">
+        <a href="index.html" class="back-btn" title="Back to local showcase">
+          ← Main Experience
+        </a>
+        <a href="https://akhileshtribhavannishad1-sketch.github.io/project-1/" target="_blank" class="back-btn" style="background: rgba(255, 255, 255, 0.06); border-color: rgba(255, 255, 255, 0.2);" title="Open hosted live 4K website">
+          🌐 Live 4K App ↗
+        </a>
+      </div>
     </header>
 
     <section class="hero-portal">
@@ -235,9 +354,9 @@
       <a href="mailto:akhileshtribhavannishad1@gmail.com" class="portal-btn" style="background: rgba(0, 229, 255, 0.15); border: 1px solid rgba(0, 229, 255, 0.5); color: #00e5ff;">
         ✉ Email Akhilesh Nishad
       </a>
-      <a href="index.html?book=true" class="portal-btn" style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2);">
-        Schedule Private Demo
-      </a>
+      <button type="button" onclick="openDemoModal()" class="portal-btn" style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.25);">
+        📅 Schedule Private Demo
+      </button>
     </div>
 
     <div style="margin-top: 4rem; text-align: center; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 2rem;">
@@ -245,5 +364,144 @@
       <p style="color: #888; font-size: 0.88rem; margin-top: 0.3rem;">Student at Ajeenkya D.Y. Patil University, Pune • Contact: +91 8097852320 | akhileshtribhavannishad1@gmail.com</p>
     </div>
   </div>
+
+  <!-- Interactive Schedule Private Demo Modal (Safe on all devices & protocols) -->
+  <div class="modal-backdrop" id="demoModal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeDemoModal()" aria-label="Close">&times;</button>
+      <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.5rem;">
+        <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #00ff88; box-shadow: 0 0 10px #00ff88;"></span>
+        <span style="font-size: 0.8rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #00ff88;">VIP Architecture Session</span>
+      </div>
+      <h2 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 0.4rem; color: #fff; font-family: 'Space Grotesk', sans-serif;">
+        Schedule Private Demo
+      </h2>
+      <p style="color: var(--text-muted); font-size: 0.93rem; margin-bottom: 1.6rem; line-height: 1.5;">
+        Connect directly with Lead Architect <strong>Akhilesh Nishad</strong> for a 1-on-1 walkthrough of Novara's biometric telemetry and high-throughput cloud infrastructure.
+      </p>
+
+      <form id="demoForm" onsubmit="handleDemoSubmit(event)">
+        <div class="form-group">
+          <label class="form-label">Full Name</label>
+          <input type="text" id="demoName" required class="form-input" placeholder="e.g. Elena Rostova" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Work Email / Phone</label>
+          <input type="text" id="demoEmail" required class="form-input" placeholder="name@company.com or phone number" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Architecture Focus Area</label>
+          <select id="demoFocus" class="form-input" style="background: #14141d; color: #fff;">
+            <option>Enterprise Cloud Telemetry & CDN Sync</option>
+            <option>4K Motion Interface & Biometric HUD</option>
+            <option>Fintech High-Throughput Infrastructure</option>
+            <option>Custom Enterprise Deployment</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Preferred Date & Time (Optional)</label>
+          <input type="datetime-local" id="demoTime" class="form-input" style="color-scheme: dark;" />
+        </div>
+
+        <div style="display: flex; gap: 0.8rem; flex-wrap: wrap; margin-top: 1.5rem;">
+          <button type="submit" class="portal-btn" style="flex: 1; min-width: 190px; padding: 0.95rem 1.4rem;">
+            ✓ Confirm Demo Booking
+          </button>
+          <a href="mailto:akhileshtribhavannishad1@gmail.com?subject=Novara%20Private%20Demo%20Request" class="portal-btn" style="background: rgba(0, 229, 255, 0.15); border: 1px solid rgba(0, 229, 255, 0.5); color: #00e5ff; padding: 0.95rem 1.4rem;">
+            ✉ Email Directly
+          </a>
+        </div>
+      </form>
+
+      <!-- Instant Feedback Confirmation State -->
+      <div id="demoSuccessState" style="display: none; text-align: center; padding: 1.5rem 0;">
+        <div style="font-size: 2.8rem; margin-bottom: 0.8rem;">🎉</div>
+        <h3 style="font-size: 1.4rem; color: #fff; margin-bottom: 0.5rem; font-family: 'Space Grotesk', sans-serif;">Demo Request Confirmed!</h3>
+        <p style="color: var(--text-muted); font-size: 0.93rem; line-height: 1.6; margin-bottom: 1.5rem;">
+          Your private demo request has been registered. Akhilesh Nishad will reach out to confirm your session.
+        </p>
+        <div style="display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap;">
+          <a href="https://wa.me/918097852320?text=Hi%20Akhilesh,%20I%20just%20scheduled%20a%20private%20demo%20for%20Novara." target="_blank" class="portal-btn" style="background: rgba(0, 255, 136, 0.15); border: 1px solid rgba(0, 255, 136, 0.5); color: #00ff88;">
+            💬 Ping on WhatsApp
+          </a>
+          <button type="button" onclick="closeDemoModal()" class="portal-btn" style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.25);">
+            Done
+          </button>
+        </div>
+      </div>
+
+      <div style="margin-top: 1.5rem; padding-top: 1.2rem; border-top: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; color: #888; flex-wrap: wrap; gap: 0.5rem;">
+        <span>Direct Contact: +91 8097852320</span>
+        <a href="https://akhileshtribhavannishad1-sketch.github.io/project-1/" target="_blank" style="color: var(--accent-red); text-decoration: none; font-weight: 600;">
+          Launch 4K Live App ↗
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function openDemoModal() {
+      const modal = document.getElementById('demoModal');
+      if (modal) {
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closeDemoModal() {
+      const modal = document.getElementById('demoModal');
+      if (modal) {
+        modal.classList.remove('open');
+        document.body.style.overflow = '';
+        setTimeout(function() {
+          const form = document.getElementById('demoForm');
+          const success = document.getElementById('demoSuccessState');
+          if (form) form.style.display = 'block';
+          if (success) success.style.display = 'none';
+        }, 300);
+      }
+    }
+
+    window.addEventListener('click', function(e) {
+      const modal = document.getElementById('demoModal');
+      if (e.target === modal) closeDemoModal();
+    });
+
+    window.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeDemoModal();
+    });
+
+    function handleDemoSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('demoName').value;
+      const email = document.getElementById('demoEmail').value;
+      const focus = document.getElementById('demoFocus').value;
+      const time = document.getElementById('demoTime').value || 'To be decided';
+
+      const subject = encodeURIComponent('Novara Private Demo Booking: ' + name);
+      const body = encodeURIComponent(
+        'Name: ' + name + '\n' +
+        'Contact: ' + email + '\n' +
+        'Focus Area: ' + focus + '\n' +
+        'Preferred Time: ' + time + '\n\n' +
+        'Submitted via Novara Cloud Console.'
+      );
+
+      document.getElementById('demoForm').style.display = 'none';
+      document.getElementById('demoSuccessState').style.display = 'block';
+
+      // Open email client with prefilled details
+      setTimeout(function() {
+        window.location.href = 'mailto:akhileshtribhavannishad1@gmail.com?subject=' + subject + '&body=' + body;
+      }, 600);
+    }
+
+    // Auto-open modal if navigated with #book or query parameter
+    document.addEventListener('DOMContentLoaded', function() {
+      if (window.location.hash === '#book' || window.location.search.indexOf('book') !== -1) {
+        setTimeout(openDemoModal, 300);
+      }
+    });
+  </script>
 </body>
 </html>
